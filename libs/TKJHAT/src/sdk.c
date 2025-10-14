@@ -553,7 +553,20 @@ uint32_t veml6030_read_light() {
     //            Kerro arvo sopivalla kertoimella huomioiden 100 ms integraatioaika ja vahvistus 1/8
     //            käyttäen VEML6030-sovellussuunnitteluasiakirjan sivun 5 tietoja:https://www.vishay.com/docs/84367/designingveml6030.pdf
     //            Lopuksi tallenna arvo muuttujaan luxVal_uncorrected.
-  
+
+    uint8_t txBuffer[1];
+    uint8_t rxBuffer[2];
+    txBuffer[0] = ??;
+    if (i2c_write_blocking(i2c_default, VEML6030_ALS_REG, txBuffer, 1, true) != PICO_ERROR_GENERIC) {
+        if (i2c_read_blocking(i2c_default, VEML6030_ALS_REG, rxBuffer, 2, false) != PICO_ERROR_GENERIC) {
+            uint16_t value = 0b0000000000000000;
+            value |= rxBuffer[1]; // MSB
+            value < 8;
+        }
+    }
+
+
+
     uint32_t luxVal_uncorrected = 0; 
     if (luxVal_uncorrected>1000){
         // Polynomial is pulled from pg 10 of the datasheet. 
