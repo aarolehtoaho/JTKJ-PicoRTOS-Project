@@ -556,10 +556,10 @@ uint32_t veml6030_read_light() {
 
     uint8_t txBuffer[1];
     uint8_t rxBuffer[2];
-    txBuffer[0] = 0;
+    txBuffer[0] = VEML6030_ALS_REG;
     uint16_t value = 0b0000000000000000;    
-    if (i2c_write_blocking(i2c_default, VEML6030_ALS_REG, txBuffer, 1, true) != PICO_ERROR_GENERIC) {
-        if (i2c_read_blocking(i2c_default, VEML6030_ALS_REG, rxBuffer, 2, false) != PICO_ERROR_GENERIC) {
+    if (i2c_write_blocking(i2c_default, VEML6030_I2C_ADDR, txBuffer, 1, true) != PICO_ERROR_GENERIC) {
+        if (i2c_read_blocking(i2c_default, VEML6030_I2C_ADDR, rxBuffer, 2, false) != PICO_ERROR_GENERIC) {
             value |= rxBuffer[1]; // MSB
             value << 8;
             value |= rxBuffer[0]; //LSB
